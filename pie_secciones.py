@@ -176,7 +176,7 @@ month_mapping = {
     11: "Nov",
     12: "Dec",
 }
-
+# print('BARCHARTDATA', bar_chart_data)
 # Initialize the result dictionary with all months
 result = [
     {"month": month, "2023": None, "2024": None} for month in month_mapping.values()
@@ -193,6 +193,7 @@ for entry in bar_chart_data:
         if item["month"] == month_name:
             item[year] = gross_margin
 
+# print(result)
 
 # Define a default dashboard layout.
 # Dashboard grid has 12 columns by default.
@@ -213,6 +214,25 @@ layout = [
 ]
 # Create a frame to display elements.
 
+custom_theme = {
+    "axis": {
+        "ticks": {
+            "text": {"fill": "#d3d3d3"}  # Axis labels color
+        },
+        "legend": {
+            "text": {"fill": "#4682b4"}  # Legend text color
+        }
+    },
+    "tooltip": {
+        "container": {
+            "background": "#333",  # Tooltip background color
+            "color": "#fff",        # Tooltip text color
+            "fontSize": "14px",     # Tooltip font size
+            "borderRadius": "5px",  # Tooltip border rounding
+            "boxShadow": "0px 3px 6px rgba(0,0,0,0.2)",  # Tooltip shadow
+        }
+    }
+}
 with elements("demo"):
 
     # Create a new dashboard with the layout specified above.
@@ -269,6 +289,7 @@ with elements("demo"):
                 nivo.Pie(
                     data=margin_dpto_dict,
                     margin={"top": 40, "right": 80, "bottom": 80, "left": 80},
+                    valueFormat=" >+$,~r",
                     innerRadius=0.5,
                     padAngle=0.7,
                     cornerRadius=3,
@@ -276,11 +297,12 @@ with elements("demo"):
                     borderWidth=1,
                     borderColor={"from": "color", "modifiers": [["darker", 0.2]]},
                     arcLinkLabelsSkipAngle=10,
-                    arcLinkLabelsTextColor="#141414",
+                    arcLinkLabelsTextColor="#d3d3d3",
                     arcLinkLabelsThickness=2,
                     arcLinkLabelsColor={"from": "color"},
                     arcLabelsSkipAngle=10,
-                    arcLabelsTextColor={"from": "color", "modifiers": [["darker", 2]]},
+                    arcLabelsTextColor="#d3d3d3",
+
                     defs=[
                         {
                             "id": "dots",
@@ -357,7 +379,8 @@ with elements("demo"):
                     valueScale={"type": "linear"},
                     indexScale={"type": "band", "round": True},
                     valueFormat=" >+$,~r",
-                    colors={"scheme": "nivo"},
+                    theme=custom_theme,
+                    colors={"scheme": "paired"},
                     defs=[
                         {
                             "id": "dots",
