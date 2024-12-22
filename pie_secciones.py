@@ -4,9 +4,11 @@
 Created on Tue Aug 20 15:08:00 2024
 
 @author: Mauricio
+
+Pendiente generar el bum_chart_data
 """
 
-
+import json
 import pandas as pd
 from streamlit_elements import elements, dashboard, mui, nivo
 import streamlit as st
@@ -16,203 +18,26 @@ st.set_page_config(layout="wide")
 # All available objects and there usage are listed there:
 # https://github.com/okld/streamlit-elements#getting-started
 
-bump_chart_data = [
-    {
-        "id": "Brady Wells",
-        "data": [
-            {"x": 202301, "y": 5299},
-            {"x": 202302, "y": 7162},
-            {"x": 202303, "y": 6116},
-            {"x": 202304, "y": 7011},
-            {"x": 202305, "y": 5952},
-            {"x": 202306, "y": 7404},
-            {"x": 202307, "y": 3455},
-            {"x": 202308, "y": 858},
-            {"x": 202309, "y": 4728},
-            {"x": 202310, "y": 6755},
-            {"x": 202311, "y": 2720},
-            {"x": 202312, "y": 10626},
-            {"x": 202401, "y": 8691},
-            {"x": 202402, "y": 7834},
-            {"x": 202403, "y": 17607},
-            {"x": 202404, "y": 726},
-            {"x": 202405, "y": 1541},
-            {"x": 202406, "y": 11052},
-            {"x": 202407, "y": 3983},
-        ],
-    },
-    {
-        "id": "Brenda Koch",
-        "data": [
-            {"x": 202301, "y": 11494},
-            {"x": 202302, "y": 14208},
-            {"x": 202303, "y": 10888},
-            {"x": 202304, "y": 7606},
-            {"x": 202305, "y": 17404},
-            {"x": 202306, "y": 4293},
-            {"x": 202307, "y": 8382},
-            {"x": 202308, "y": 9933},
-            {"x": 202309, "y": 2721},
-            {"x": 202310, "y": 6810},
-            {"x": 202311, "y": 7030},
-            {"x": 202312, "y": 239},
-            {"x": 202401, "y": 15497},
-            {"x": 202402, "y": 2300},
-            {"x": 202403, "y": 6061},
-            {"x": 202404, "y": 7650},
-            {"x": 202405, "y": 9678},
-            {"x": 202406, "y": 13739},
-            {"x": 202407, "y": 7649},
-        ],
-    },
-    {
-        "id": "Joseph Jordan",
-        "data": [
-            {"x": 202301, "y": 6349},
-            {"x": 202302, "y": 13921},
-            {"x": 202303, "y": 5442},
-            {"x": 202304, "y": 8214},
-            {"x": 202305, "y": 4063},
-            {"x": 202306, "y": 9016},
-            {"x": 202307, "y": 12266},
-            {"x": 202308, "y": 7591},
-            {"x": 202309, "y": 13267},
-            {"x": 202310, "y": 10149},
-            {"x": 202311, "y": 9351},
-            {"x": 202312, "y": 18681},
-            {"x": 202401, "y": 13216},
-            {"x": 202402, "y": 8435},
-            {"x": 202403, "y": 7942},
-            {"x": 202404, "y": 11473},
-            {"x": 202405, "y": 10099},
-            {"x": 202406, "y": 6740},
-            {"x": 202407, "y": 6088},
-        ],
-    },
-    {
-        "id": "Michael Scott DDS",
-        "data": [
-            {"x": 202301, "y": 3120},
-            {"x": 202302, "y": 9619},
-            {"x": 202303, "y": 5676},
-            {"x": 202304, "y": 9083},
-            {"x": 202305, "y": 13643},
-            {"x": 202306, "y": 7696},
-            {"x": 202307, "y": 4126},
-            {"x": 202308, "y": 9561},
-            {"x": 202309, "y": 9127},
-            {"x": 202310, "y": 9405},
-            {"x": 202311, "y": 10991},
-            {"x": 202312, "y": 9630},
-            {"x": 202401, "y": 7145},
-            {"x": 202402, "y": 6995},
-            {"x": 202403, "y": 14038},
-            {"x": 202404, "y": 10980},
-            {"x": 202405, "y": 10584},
-            {"x": 202406, "y": 6134},
-            {"x": 202407, "y": 9658},
-        ],
-    },
-    {
-        "id": "Ryan Camacho",
-        "data": [
-            {"x": 202301, "y": 20177},
-            {"x": 202302, "y": 15668},
-            {"x": 202303, "y": 17488},
-            {"x": 202304, "y": 19733},
-            {"x": 202305, "y": 22956},
-            {"x": 202306, "y": 13376},
-            {"x": 202307, "y": 15505},
-            {"x": 202308, "y": 13693},
-            {"x": 202309, "y": 16203},
-            {"x": 202310, "y": 17262},
-            {"x": 202311, "y": 23867},
-            {"x": 202312, "y": 13005},
-            {"x": 202401, "y": 10696},
-            {"x": 202402, "y": 12044},
-            {"x": 202403, "y": 22262},
-            {"x": 202404, "y": 16247},
-            {"x": 202405, "y": 18864},
-            {"x": 202406, "y": 15475},
-            {"x": 202407, "y": 11695},
-        ],
-    },
-]
+with open("pie_dict.json", "r") as file:
+    pie_data = json.load(file)
+        
+with open("bar_dict.json", "r") as file:
+    bar_data = json.load(file)
 
-
-df = pd.read_csv("shipments.csv", sep=";", encoding="latin1", decimal=".")
-df["Date"] = pd.to_datetime(df["Date"], yearfirst=True)
-
-df["year"] = df["Date"].dt.year
-df["month"] = df["Date"].dt.month
-
-
-df["Gross Margin"] = df["Invoiced Value"] * df["Markup"]
-margen_operativo = int(df["Gross Margin"].sum())
-
-margin_dpto = (
-    df[["Gross Margin", "Department"]].groupby(["Department"]).sum().reset_index()
-)
-# nivo usa id y value para cargar los datos en el gráfico
-margin_dpto.rename(columns={"Department": "id", "Gross Margin": "value"}, inplace=True)
-# convertimos el df en un listado de diccionarios, es la estructura que necesita nivo
-margin_dpto_dict = margin_dpto.to_dict(orient="records")
-
-
-bar_chart_data = df.groupby(["year", "month"])["Gross Margin"].sum().reset_index()
-bar_chart_data = bar_chart_data.to_dict(orient="records")
-# Change page layout to make the dashboard take the whole page.
-month_mapping = {
-    1: "Jan",
-    2: "Feb",
-    3: "Mar",
-    4: "Apr",
-    5: "May",
-    6: "Jun",
-    7: "Jul",
-    8: "Aug",
-    9: "Sep",
-    10: "Oct",
-    11: "Nov",
-    12: "Dec",
-}
-# print('BARCHARTDATA', bar_chart_data)
-# Initialize the result dictionary with all months
-result = [
-    {"month": month, "2023": None, "2024": None} for month in month_mapping.values()
-]
-
-# Fill the result dictionary with data
-for entry in bar_chart_data:
-    month_name = month_mapping[entry["month"]]
-    year = str(entry["year"])
-    gross_margin = entry["Gross Margin"]
-
-    # Find the corresponding month in the result list and update the year value
-    for item in result:
-        if item["month"] == month_name:
-            item[year] = gross_margin
-
-# print(result)
+with open("bum_dict.json", "r") as file:
+    bump_chart_data = json.load(file)
 
 # Define a default dashboard layout.
-# Dashboard grid has 12 columns by default.
-#
-# For more information on available parameters:
-# https://github.com/react-grid-layout/react-grid-layout#grid-item-props
-
 layout = [
-    # Editor item is positioned in coordinates x=0 and y=0,
     # and takes 6/12 columns and has a height of 3.
-    dashboard.Item("editor", 0, 1, 6, 3),
+    dashboard.Item("bar_chart", 0, 1, 6, 3),
     # Chart item is positioned in coordinates x=6 and y=0,
     # and takes 6/12 columns and has a height of 3.
-    dashboard.Item("chart", 6, 1, 6, 3),
+    dashboard.Item("pie", 6, 1, 6, 3),
     # Media item is positioned in coordinates
     # x=0 and y=3, and takes 6/12 columns and has a height of 4.
-    dashboard.Item("media", 0, 2, 12, 4),
+    dashboard.Item("area_bump", 0, 2, 12, 4),
 ]
-# Create a frame to display elements.
 
 custom_theme = {
     "axis": {
@@ -260,7 +85,7 @@ with elements("demo"):
         # We will use the same flexbox configuration as the first card to
         # auto adjust the content height.
 
-        with mui.Card(key="chart", sx={"display": "flex", "flexDirection": "column"}):
+        with mui.Card(key="pie", sx={"display": "flex", "flexDirection": "column"}):
 
             # To make this header draggable, we just need to set its classname to 'draggable',
             # as defined above in dashboard.Grid's draggableHandle.
@@ -287,7 +112,7 @@ with elements("demo"):
                 # https://nivo.rocks/
 
                 nivo.Pie(
-                    data=margin_dpto_dict,
+                    data=pie_data,
                     margin={"top": 40, "right": 80, "bottom": 80, "left": 80},
                     valueFormat=" >+$,~r",
                     innerRadius=0.5,
@@ -354,7 +179,7 @@ with elements("demo"):
                         }
                     ],
                 )
-        with mui.Card(key="editor", sx={"display": "flex", "flexDirection": "column"}):
+        with mui.Card(key="bar_chart", sx={"display": "flex", "flexDirection": "column"}):
 
             # To make this header draggable, we just need to set its classname to 'draggable',
             # as defined above in dashboard.Grid's draggableHandle.
@@ -370,7 +195,7 @@ with elements("demo"):
                 # https://nivo.rocks/
 
                 nivo.Bar(
-                    data=result,
+                    data=bar_data,
                     keys=["2023", "2024"],
                     indexBy="month",
                     margin={"top": 50, "right": 130, "bottom": 50, "left": 60},
@@ -452,7 +277,7 @@ with elements("demo"):
                     ariaLabel="Nivo bar chart demo",
                     barAriaLabel=lambda e: f"{e['id']}: {e['formattedValue']} in country: {e['indexValue']}",
                 )
-        with mui.Card(key="media", sx={"display": "flex", "flexDirection": "column"}):
+        with mui.Card(key="area_bump", sx={"display": "flex", "flexDirection": "column"}):
 
             mui.CardHeader(
                 title="Sales Executive ranking evolution", className="draggable"

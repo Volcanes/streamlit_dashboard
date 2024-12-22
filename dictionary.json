@@ -1,0 +1,42 @@
+[
+    {
+        "Customer": "AeroNext Engineering",
+        "Gross Margin": 23997.8346
+    },
+    {
+        "Customer": "Allen,WilliamsandWhite",
+        "Gross Margin": 28676.9947
+    },
+    {
+        "Customer": "ApexFusion Works",
+        "Gross Margin": -2000
+    },
+    {
+        "Customer": "Ascendia SteelworksMartin-Holden",
+        "Gross Margin": 20709.372
+    },
+    {
+        "Customer": "Bass-Bolton",
+        "Gross Margin": 9936.902900000001
+    },
+    {
+        "Customer": "Bennett,VillegasandFowler",
+        "Gross Margin": 13747.7769
+    },
+    {
+        "Customer": "BlueHorizon Steel",
+        "Gross Margin": -15000
+    },
+    {
+        "Customer": "BrightMinds Machining",
+        "Gross Margin": 13272.6602
+    },
+    {
+        "Customer": "CarterGroup",
+        "Gross Margin": 30192.9984
+    },
+    {
+        "Customer": "Chandler,TurnerandHouston",
+        "Gross Margin": 23088.6084
+    }
+]
